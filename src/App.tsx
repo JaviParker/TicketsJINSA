@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Pusher from 'pusher-js';
+import './index.css';
 
 interface TicketData {
   folio: string;
@@ -12,9 +13,10 @@ function App() {
 
   // Imágenes del slider
   const slides = [
-    "https://images.unsplash.com/photo-1581244276891-6bc3a2f3b1c5?auto=format&fit=crop&q=80&w=1200",
-    "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?auto=format&fit=crop&q=80&w=1200",
-    "https://images.unsplash.com/photo-1530124560677-bdaea92ca51e?auto=format&fit=crop&q=80&w=1200"
+    "https://i.postimg.cc/7LpqMg1B/image-2025-12-30-094619668.png",
+    "https://i.postimg.cc/P5Wbk4JD/Gemini-Generated-Image-vcqlllvcqlllvcql.png",
+    "https://i.postimg.cc/yNqV0myr/Gemini-Generated-Image-yxodamyxodamyxod.png",
+    "https://i.postimg.cc/SR09Y2t7/Gemini-Generated-Image-pbwvixpbwvixpbwv.png"
   ];
 
   useEffect(() => {
@@ -54,7 +56,12 @@ function App() {
         <div className="flex items-start gap-5 mb-16">
           {/* Logo (Cuadrado Negro) */}
           <div className="w-20 h-20 bg-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <span className="text-[#FF7A00] font-black text-4xl">J</span>
+            {/* <span className="text-[#FF7A00] font-black text-4xl">J</span> */}
+            <img 
+              src="https://jinsa.com.mx/cdn/shop/files/LOGOGDE.png?v=1760053686" 
+              alt="Logo JINSA" 
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
           
           {/* Textos del Header */}
