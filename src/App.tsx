@@ -90,13 +90,13 @@ function App() {
                 </span>
               </div>
 
-              {/* 3. Div del QR (3 veces más grande y Centrado) */}
-              <div className="flex justify-center w-full mb-10">
-                <div className="p-4 bg-white border-[10px] border-gray-50 rounded-[4rem] shadow-xl">
+              {/* 3. Div del QR (Tamaño Maximizado y Centrado) */}
+              <div className="flex justify-center w-full mb-14 px-6">
+                <div className="p-10 bg-white border-[20px] border-gray-50 rounded-[5rem] shadow-2xl flex items-center justify-center w-full max-w-[900px]">
                   <img 
                     src={ticket.qrCodeBase64} 
                     alt="Código QR de Validación" 
-                    className="w-full max-w-[550px] aspect-square object-contain"
+                    className="w-full h-auto aspect-square object-contain"
                   />
                 </div>
               </div>
