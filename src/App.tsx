@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import Pusher from 'pusher-js';
 import './index.css';
 
+// URL del sonido de campana (puedes guardarlo en public/ para mayor velocidad)
+const BELL_SOUND_URL = "/bell-notification.mp3";
+
 interface TicketData {
   folio: string;
   qrCodeBase64: string;
@@ -25,7 +28,15 @@ function App() {
     }); 
 
     const channel = pusher.subscribe('tickets-channel');
+    
+    // FUNCIONALIDAD AGREGADA: Sonido al recibir ticket
     channel.bind('new-ticket', (data: TicketData) => {
+      const audio = new Audio(BELL_SOUND_URL);
+      audio.volume = 0.8; // Ajuste de volumen al 80%
+      audio.play().catch(() => {
+        console.log("Audio bloqueado: Haz clic en cualquier lugar de la pantalla para activarlo.");
+      });
+      
       setTicket(data);
     });
 
@@ -129,7 +140,6 @@ function App() {
               alt="Publicidad Ferretería" 
               className="w-full h-full object-cover"
             />
-            {/* Overlay sutil para mejorar contraste si es necesario */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
         ))}
