@@ -11,7 +11,6 @@ function App() {
   const [ticket, setTicket] = useState<TicketData | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Imágenes del slider
   const slides = [
     "https://i.postimg.cc/7LpqMg1B/image-2025-12-30-094619668.png",
     "https://i.postimg.cc/P5Wbk4JD/Gemini-Generated-Image-vcqlllvcqlllvcql.png",
@@ -20,7 +19,6 @@ function App() {
   ];
 
   useEffect(() => {
-    // Configuración de Pusher
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY || "12326b1d11f72d7bccef", {
       cluster: import.meta.env.VITE_PUSHER_CLUSTER || "us2",
       forceTLS: true
@@ -31,7 +29,6 @@ function App() {
       setTicket(data);
     });
 
-    // Intervalo del slider
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
@@ -50,67 +47,67 @@ function App() {
       {/* =========================================
           CONTENEDOR IZQUIERDO (40% width)
       ========================================= */}
-      <div className="flex w-[40%] flex-col p-12 justify-center">
+      <div className="flex w-[40%] flex-col px-12 pt-[35px] border-r border-gray-100">
         
         {/* 1. Header: Logo, Título y Subtítulo */}
-        <div className="flex items-start gap-5 mb-16">
-          {/* Logo (Cuadrado Negro) */}
-          <div className="w-20 h-20 bg-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            {/* <span className="text-[#FF7A00] font-black text-4xl">J</span> */}
+        <div className="flex items-start gap-6 mb-12">
+          <div className="w-24 h-24 bg-black rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
             <img 
               src="https://jinsa.com.mx/cdn/shop/files/LOGOGDE.png?v=1760053686" 
               alt="Logo JINSA" 
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
           
-          {/* Textos del Header */}
           <div className="flex flex-col">
-            <h1 className="text-black text-4xl font-black leading-tight uppercase">
-              Ferretería La Económica
+            <h1 className="text-black text-5xl font-black leading-tight uppercase tracking-tighter">
+              Ferretería <br/> La Económica
             </h1>
-            <h2 className="text-black text-2xl font-medium tracking-wider mt-1 uppercase">
+            <h2 className="text-[#FF7A00] text-3xl font-bold tracking-[0.2em] mt-1 uppercase">
               Tickets
             </h2>
           </div>
         </div>
 
-        {/* Contenido Dinámico (Folio y QR) */}
-        <div>
+        {/* Contenido Dinámico */}
+        <div className="flex-1 flex flex-col">
           {!ticket ? (
-            // Estado de espera
-            <div className="p-10 border-4 border-dashed border-gray-200 rounded-2xl text-center animate-pulse">
-              <p className="text-gray-400 text-2xl font-bold uppercase">Esperando ticket...</p>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="p-16 border-8 border-dashed border-gray-100 rounded-[3rem] text-center animate-pulse">
+                <p className="text-gray-300 text-4xl font-black uppercase italic">Sincronizando...</p>
+              </div>
             </div>
           ) : (
-            // Ticket Recibido
-            <div className="flex flex-col animate-in fade-in duration-500">
+            <div className="flex flex-col animate-in fade-in zoom-in duration-700">
               
-              {/* 2. Sección FOLIO (Horizontal) */}
-              <div className="flex items-baseline gap-4 mb-10">
-                <span className="text-black text-5xl font-black uppercase tracking-tight">
+              {/* 2. Sección FOLIO (Masivo y Horizontal) */}
+              <div className="flex items-center gap-6 mb-10">
+                <span className="text-black text-7xl font-black uppercase">
                   FOLIO
                 </span>
-                {/* Valor del folio en Naranja #FF7A00 */}
-                <span className="text-[#FF7A00] text-6xl font-black font-mono leading-none uppercase">
+                <span className="text-[#FF7A00] text-8xl font-black font-mono leading-none uppercase">
                   {ticket.folio}
                 </span>
               </div>
 
-              {/* 3. Div del QR Interpretado */}
-              <div className="mb-8 self-start p-2 bg-white border-4 border-gray-100 rounded-3xl shadow-sm">
-                <img 
-                  src={ticket.qrCodeBase64} 
-                  alt="Código QR" 
-                  // Tamaño ajustado para que se vea bien en el 40% de pantalla
-                  className="w-full max-w-[350px] h-auto object-contain rounded-2xl"
-                />
+              {/* 3. Div del QR (3 veces más grande y Centrado) */}
+              <div className="flex justify-center w-full mb-10">
+                <div className="p-4 bg-white border-[10px] border-gray-50 rounded-[4rem] shadow-xl">
+                  <img 
+                    src={ticket.qrCodeBase64} 
+                    alt="Código QR de Validación" 
+                    className="w-full max-w-[550px] aspect-square object-contain"
+                  />
+                </div>
               </div>
 
-              {/* 4. Leyenda Inferior */}
-              <p className="text-black text-xl font-bold leading-tight max-w-md">
-                Escanea el código QR para obtener tu ticket
-              </p>
+              {/* 4. Leyenda Inferior (Más Grande) */}
+              <div className="text-center">
+                <p className="text-black text-4xl font-black leading-none uppercase tracking-tighter">
+                  Escanea el código QR <br/> 
+                  <span className="text-2xl font-bold text-gray-400 mt-2 block">para obtener tu ticket</span>
+                </p>
+              </div>
             </div>
           )}
         </div>
@@ -119,7 +116,7 @@ function App() {
       {/* =========================================
           CONTENEDOR DERECHO (60% width) - Slider
       ========================================= */}
-      <div className="w-[60%] bg-gray-100 relative overflow-hidden">
+      <div className="w-[60%] bg-[#f3f3f3] relative overflow-hidden">
         {slides.map((url, index) => (
           <div
             key={url}
@@ -127,12 +124,13 @@ function App() {
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
-            {/* Imagen limpia sin overlays ni texto */}
             <img 
               src={url} 
-              alt="Slider" 
+              alt="Publicidad Ferretería" 
               className="w-full h-full object-cover"
             />
+            {/* Overlay sutil para mejorar contraste si es necesario */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
         ))}
       </div>
