@@ -15,7 +15,7 @@ function App() {
     const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY || "12326b1d11f72d7bccef", {
       cluster: import.meta.env.VITE_PUSHER_CLUSTER || "us2",
       forceTLS: true
-    });
+    }); 
 
     // 2. Suscribirse al canal definido en tu backend
     const channel = pusher.subscribe('tickets-channel');
