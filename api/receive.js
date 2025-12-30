@@ -1,30 +1,52 @@
 // api/receive.js
-import Pusher from "pusher";
+const Pusher = require("pusher"); // Usa require para asegurar compatibilidad en Vercel Node runtime
 
 const pusher = new Pusher({
-  appId: "2096563",
-  key: "12326b1d11f72d7bccef",
-  secret: "7dfa573ed136281e4876",
-  cluster: "us2",
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.VITE_PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.VITE_PUSHER_CLUSTER,
   useTLS: true
 });
 
 export default async function handler(req, res) {
+  // Configuración de CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   if (req.method === 'POST') {
-    const { folio, qrCodeBase64 } = req.body;
+    try {
+      const { folio, qrCodeBase64 } = req.body;
 
-    // ESTO ENVÍA EL TICKET AL FRONTEND AL INSTANTE
-    await pusher.trigger("tickets-channel", "new-ticket", {
-      folio,
-      qrCodeBase64
-    });
+      // Validación simple
+      if (!folio || !qrCodeBase64) {
+        return res.status(400).json({ error: "Faltan campos obligatorios: folio o qrCodeBase64" });
+      }
 
-    return res.status(200).json({ status: "Enviado a Pusher" });
+      // Disparar evento a Pusher (DEBE ser await)
+      await pusher.trigger("tickets-channel", "new-ticket", {
+        folio,
+        qrCodeBase64
+      });
+
+      return res.status(200).json({ 
+        status: "success", 
+        message: "Evento enviado a Pusher correctamente" 
+      });
+
+    } catch (error) {
+      console.error("Error en Pusher:", error);
+      return res.status(500).json({ 
+        error: "Error interno del servidor", 
+        details: error.message 
+      });
+    }
   }
+
+  return res.status(405).json({ error: "Método no permitido" });
 }
