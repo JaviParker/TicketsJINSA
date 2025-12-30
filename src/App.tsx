@@ -80,8 +80,8 @@ function App() {
           ) : (
             <div className="flex flex-col animate-in fade-in zoom-in duration-700">
               
-              {/* 2. Sección FOLIO (Masivo y Horizontal) */}
-              <div className="flex items-center gap-6 mb-10">
+              {/* 2. Sección FOLIO (Masivo, Horizontal y Centrado) */}
+              <div className="flex items-center justify-center gap-8 mb-10 w-full">
                 <span className="text-black text-7xl font-black uppercase">
                   FOLIO
                 </span>
